@@ -31,7 +31,7 @@ namespace ContactsAPI.Controllers
 			}
 
 			persons.Add(newPerson);
-			return Ok(newPerson);
+			return Created("Person successfully created", newPerson);
 
 
 		}
@@ -42,17 +42,19 @@ namespace ContactsAPI.Controllers
 		public IActionResult DeletePerson(int index)
 		{
 
-			if (index >= 0 && index <= persons.Count)
+			if (index <= 0 && index > persons.Count)
 			{
-				persons.RemoveAt(index);
-				return NoContent();
-			}
-			else
-			{
-				return NotFound();
+				return BadRequest("Invalid ID supplied");
 			}
 
-			return BadRequest("Invalid index");
+			var person = persons.SingleOrDefault(person => person.Id == index);
+			if (person == null)
+			{
+				return NotFound("Person not found");
+			}
+
+			persons.Remove(person);
+			return NoContent();
 		}
 
 		//find by name
