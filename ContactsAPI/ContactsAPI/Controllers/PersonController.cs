@@ -25,7 +25,7 @@ namespace ContactsAPI.Controllers
 		public IActionResult AddItem([FromBody] Person newPerson)
 		{
 
-			if( newPerson.Id == null || newPerson.Email == null || newPerson.Email == " ")
+			if (newPerson.Id == null || String.IsNullOrEmpty(newPerson.Email))
 			{
 				return BadRequest("Invalid input(e.g.required field missing or empty");
 			}
@@ -38,7 +38,7 @@ namespace ContactsAPI.Controllers
 
 		//delete person with id
 		[HttpDelete]
-        [Route("{index}")]
+		[Route("{index}")]
 		public IActionResult DeletePerson(int index)
 		{
 
@@ -78,8 +78,8 @@ namespace ContactsAPI.Controllers
 			return BadRequest("Invalid index");
 		}
 
-	
-	
+
+
 
 
 	}
